@@ -1,8 +1,8 @@
-const G = 700;
+const G = 300;
 const MAG_RAD = 5;
 const MAXSP = 2;
 const ORBIT = 25;
-const ORBIT_SPEED = 1.2;
+const ORBIT_SPEED = 1;
 /*
  * center class used for build the attractor
  */
@@ -52,7 +52,7 @@ class center{
  */
 class particle{
   constructor(){
-    this.pos = createVector(400,random(500));
+    this.pos = createVector(1000,random(100,300));
     this.vel = createVector(-1,0);
     this.acc = createVector();
   }
@@ -61,8 +61,8 @@ class particle{
    * update the location of particles
    */
   update(){
-    stroke(255,90);
-    strokeWeight(4);
+    stroke(255,80);
+    strokeWeight(3);
     var prePos = this.pos;
     this.pos = p5.Vector.add(this.pos, this.vel);
     this.vel = p5.Vector.add(this.vel, this.acc);
@@ -71,4 +71,7 @@ class particle{
     point(this.pos.x,this.pos.y);
     //line(prePos.x,prePos.y,this.pos.x,this.pos.y);
   }
+
+
+
 }
