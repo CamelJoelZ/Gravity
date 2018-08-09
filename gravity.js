@@ -8,15 +8,14 @@ const ORBIT_SPEED = 1;
  */
 class center{
   constructor(){
-    this.pos = createVector();
+    this.pos = createVector(20,200);
+    this.ammo = 0;
   }
 
   /*
    * update the location of the attractor
    */
   update(){
-    this.pos.x = mouseX;
-    this.pos.y = mouseY;
     fill(50);
     stroke(50);
     ellipse(this.pos.x,this.pos.y,MAG_RAD,MAG_RAD);
@@ -36,13 +35,15 @@ class center{
    */
   capture(dot){
     var dis = p5.Vector.sub(this.pos,dot.pos);
-    if(dis.mag() <= ORBIT){
+    if(dis.mag() < ORBIT) dot.acc.mult(-1);
+    if(dis.mag() == ORBIT){
       var tmpAcc = dot.acc;
       dot.vel = dot.acc.rotate(HALF_PI);
       dot.vel.setMag(ORBIT_SPEED);
       dot.acc = tmpAcc;
       //dot.vel.rotate(HALF_PI);
       //dot.vel.mult(ORBIT_SPEED);
+      //this.ammo++;
     }
   }
 }
