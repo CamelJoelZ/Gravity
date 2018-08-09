@@ -1,6 +1,6 @@
 var cen;
 var par;
-const MAG_RAD = 10;
+
 
 function setup(){
   createCanvas(500,500);
@@ -12,6 +12,7 @@ function setup(){
 function draw(){
   background(70);
   cen.update();
-  par.create();
+  par.update();
   cen.attract(par);
+  console.log(par.vel.mag());
 }
