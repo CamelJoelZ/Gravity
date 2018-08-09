@@ -35,8 +35,7 @@ class center{
    */
   capture(dot){
     var dis = p5.Vector.sub(this.pos,dot.pos);
-    if(dis.mag() < ORBIT) dot.acc.mult(-1);
-    if(dis.mag() == ORBIT){
+    if(dis.mag() <= ORBIT ){
       var tmpAcc = dot.acc;
       dot.vel = dot.acc.rotate(HALF_PI);
       dot.vel.setMag(ORBIT_SPEED);
@@ -44,6 +43,7 @@ class center{
       //dot.vel.rotate(HALF_PI);
       //dot.vel.mult(ORBIT_SPEED);
       //this.ammo++;
+      dot.captured = 1;
     }
   }
 }
@@ -56,6 +56,7 @@ class particle{
     this.pos = createVector(1000,random(100,300));
     this.vel = createVector(-1,0);
     this.acc = createVector();
+    this.captured = 0;
   }
 
   /*
@@ -64,7 +65,7 @@ class particle{
   update(){
     stroke(255,80);
     strokeWeight(3);
-    var prePos = this.pos;
+    //var prePos = this.pos;
     this.pos = p5.Vector.add(this.pos, this.vel);
     this.vel = p5.Vector.add(this.vel, this.acc);
     // limit the speed of particles

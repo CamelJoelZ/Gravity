@@ -1,5 +1,6 @@
 const PAR_NUM = 100;
 const SPEED = 3;
+const AMMO = 10;
 
 var cen;
 var par;
@@ -23,12 +24,34 @@ function draw(){
  * randomly create incoming particles
  */
  function create(arr,z){
-   turn++
+   turn++;
+   // create the new coming particles
    if(turn % 50 == 0) arr.push(new particle());
+
+   // update the position of every particles in the game
    for( var i = 0; i < arr.length; i++){
      arr[i].update();
-     z.attract(arr[i]);
+
+     // only attract new particles when ammo is not full
+     if(checkAmmo(arr) < AMMO && arr[i].captured == 0)
+      z.attract(arr[i]);
+      //console.log(z.ammo);
+     if(arr[i].captured == 1)
+      z.attract(arr[i]);
    }
+ }
+
+ /*
+  * check the amount of ammo the center has
+  */
+ function checkAmmo(arr){
+   var aNum = 0;
+
+   for(var i = 0; i < arr.length; i++){
+     if(arr[i].captured == 1) aNum++;
+   }
+
+   return aNum;
  }
 
  function keyPressed(){
