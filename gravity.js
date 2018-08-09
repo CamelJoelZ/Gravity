@@ -1,8 +1,8 @@
-const G = 9.8;
+const G = 700;
 const MAG_RAD = 5;
-const MAXSP = 1.7;
-const ORBIT = 3;
-const ORBIT_SPEED = 0.00000000001;
+const MAXSP = 2;
+const ORBIT = 25;
+const ORBIT_SPEED = 1.2;
 /*
  * center class used for build the attractor
  */
@@ -36,8 +36,13 @@ class center{
    */
   capture(dot){
     var dis = p5.Vector.sub(this.pos,dot.pos);
-    if(dis.mag() < ORBIT){
-      dot.speed = ORBIT_SPEED;
+    if(dis.mag() <= ORBIT){
+      var tmpAcc = dot.acc;
+      dot.vel = dot.acc.rotate(HALF_PI);
+      dot.vel.setMag(ORBIT_SPEED);
+      dot.acc = tmpAcc;
+      //dot.vel.rotate(HALF_PI);
+      //dot.vel.mult(ORBIT_SPEED);
     }
   }
 }
@@ -47,8 +52,8 @@ class center{
  */
 class particle{
   constructor(){
-    this.pos = createVector(random(500),random(500));
-    this.vel = createVector();
+    this.pos = createVector(400,random(500));
+    this.vel = createVector(-1,0);
     this.acc = createVector();
   }
 
@@ -56,12 +61,14 @@ class particle{
    * update the location of particles
    */
   update(){
-    stroke(255);
-    strokeWeight(5);
+    stroke(255,90);
+    strokeWeight(4);
+    var prePos = this.pos;
     this.pos = p5.Vector.add(this.pos, this.vel);
     this.vel = p5.Vector.add(this.vel, this.acc);
     // limit the speed of particles
     this.vel.limit(MAXSP);
     point(this.pos.x,this.pos.y);
+    //line(prePos.x,prePos.y,this.pos.x,this.pos.y);
   }
 }
