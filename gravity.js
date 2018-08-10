@@ -1,3 +1,4 @@
+
 const G = 300;
 const MAG_RAD = 5;
 const MAXSP = 2;
@@ -63,7 +64,8 @@ class particle{
    * update the location of particles
    */
   update(){
-    stroke(255,80);
+    push();
+    stroke(255);
     strokeWeight(3);
     //var prePos = this.pos;
     this.pos = p5.Vector.add(this.pos, this.vel);
@@ -71,9 +73,27 @@ class particle{
     // limit the speed of particles
     this.vel.limit(MAXSP);
     point(this.pos.x,this.pos.y);
+    pop();
     //line(prePos.x,prePos.y,this.pos.x,this.pos.y);
   }
-
-
-
 }
+/*
+ * cloud class for flying cloud in the background
+ */
+ class cloud{
+   constructor(){
+     this.pos = createVector(1000,random(100,400));
+     this.vel = createVector(-100,0);
+   }
+   update(){
+     push();
+     this.pos = p5.Vector.add(this.pos, this.vel);
+     stroke(70,5);
+     rect(this.pos.x,this.pos.y,70,1);
+     stroke(0);
+     strokeWeight(3);
+     line(0,100,1000,100);
+     line(0,400,1000,400);
+     pop();
+   }
+ }
